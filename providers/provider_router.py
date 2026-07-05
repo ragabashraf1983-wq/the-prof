@@ -68,7 +68,7 @@ class ProviderRouter:
                     "label": profile.get("label", name),
                     "category": profile.get("category", provider.provider_type),
                     "available": "yes" if available else "no",
-                    "enabled": "yes" if profile.get("enabled", True) else "no",
+                    "enabled": "yes" if self._enabled(name) else "no", 
                     "message": message,
                     "model": profile.get("model", ""),
                     "endpoint": profile.get("base_url", ""),
@@ -91,8 +91,21 @@ class ProviderRouter:
         if not self.catalog:
             return True
         for profile in self.catalog.load():
-            if profile.get("name") == provider_name:
-                return bool(profile.get("enabled", False))
+            if profile.get("name") != provider_name:
+                continue
+            if not bool(profile.get("enabled", False)):
+                return False
+            provider_type = profile.get("provider_type", "")
+            adapter = profile.get("adapter", "")
+            if self.settings.get("local_only_mode", True) and provider_name not in {"ollama", "rules"}:
+                return False
+            if provider_type == "api" and not self.settings.get("online_api_enabled", False):
+                return False
+            if bool(profile.get("paid", False)) and not self.settings.get("paid_api_enabled", False):
+                return False
+            if adapter == "browser-login" and not self.settings.get("browser_login_enabled", False):
+                return False
+            return True
         return True
 
     def generate(self, task: str, prompt: str, preferred_order: list[str] | None = None, model: str = "") -> ProviderResult:

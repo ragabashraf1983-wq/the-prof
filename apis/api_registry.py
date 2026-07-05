@@ -7,6 +7,10 @@ from typing import Any
 
 class APIRegistry:
     def __init__(self, seed_dir: Path, registry_path: Path) -> None:
+        if not seed_dir.exists() and len(seed_dir.parts) >= 3 and seed_dir.parts[-3:] == ("the_prof", "apis", "imported_sources"):
+            flat_seed_dir = seed_dir.parents[2] / "apis" / "imported_sources"
+            if flat_seed_dir.exists():
+                seed_dir = flat_seed_dir
         self.seed_dir = seed_dir
         self.registry_path = registry_path
         self.registry_path.parent.mkdir(parents=True, exist_ok=True)

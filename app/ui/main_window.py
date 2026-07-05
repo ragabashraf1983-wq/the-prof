@@ -110,8 +110,14 @@ class MainWindow(QMainWindow):
         sidebar = QFrame()
         sidebar.setObjectName("Sidebar")
         sidebar_layout = QVBoxLayout(sidebar)
+        logo_path = self.context.root / "TheProf_logo.png"
         sidebar_logo = QLabel("The Prof")
         sidebar_logo.setObjectName("TitleLabel")
+        if logo_path.exists():
+            pixmap = QPixmap(str(logo_path))
+            if not pixmap.isNull():
+                sidebar_logo.setPixmap(pixmap.scaledToWidth(160, Qt.TransformationMode.SmoothTransformation))
+                sidebar_logo.setAlignment(Qt.AlignmentFlag.AlignCenter)
         sidebar_layout.addWidget(sidebar_logo)
         subtitle = QLabel("Autonomous academic research production")
         subtitle.setObjectName("SubtitleLabel")

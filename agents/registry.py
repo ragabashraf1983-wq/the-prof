@@ -7,6 +7,10 @@ from .base_agent import AgentSkill
 
 class AgentRegistry:
     def __init__(self, skill_dir: Path) -> None:
+        if not skill_dir.exists() and len(skill_dir.parts) >= 3 and skill_dir.parts[-3:] == ("the_prof", "agents", "skills"):
+            flat_skill_dir = skill_dir.parents[2] / "agents" / "skills"
+            if flat_skill_dir.exists():
+                skill_dir = flat_skill_dir
         self.skill_dir = skill_dir
         self.skills = self._load_skills()
 

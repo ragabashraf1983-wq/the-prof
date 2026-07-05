@@ -4,7 +4,19 @@ import json
 from pathlib import Path
 
 import yaml
-from PySide6.QtWidgets import QLabel, QPlainTextEdit, QTableWidget, QTableWidgetItem, QTabWidget, QVBoxLayout, QWidget
+from PySide6.QtWidgets import (
+    QHBoxLayout,
+    QInputDialog,
+    QLabel,
+    QMessageBox,
+    QPlainTextEdit,
+    QPushButton,
+    QTableWidget,
+    QTableWidgetItem,
+    QTabWidget,
+    QVBoxLayout,
+    QWidget,
+)
 
 from the_prof.app.launcher import AppContext
 
@@ -50,6 +62,18 @@ class DashboardPage(QWidget):
         title.setObjectName("TitleLabel")
         layout.addWidget(title)
         layout.addWidget(self.summary_label)
+        api_actions = QHBoxLayout()
+        test_apis = QPushButton("Test API Registry")
+        reset_apis = QPushButton("Import/Reset Seed APIs")
+        add_api = QPushButton("Add API")
+        test_apis.clicked.connect(self.test_api_registry)
+        reset_apis.clicked.connect(self.reset_api_registry)
+        add_api.clicked.connect(self.add_api_record)
+        api_actions.addWidget(add_api)
+        api_actions.addWidget(test_apis)
+        api_actions.addWidget(reset_apis)
+        api_actions.addStretch(1)
+        layout.addLayout(api_actions)
         layout.addWidget(self.tabs)
         self.refresh_api_registry()
         self.refresh_brain_summary()
@@ -112,6 +136,52 @@ class DashboardPage(QWidget):
             self.api_table.setItem(index, 2, QTableWidgetItem(record.get("endpoint", "")))
             self.api_table.setItem(index, 3, QTableWidgetItem(record.get("last_test_status", record.get("integration_status", "seeded"))))
             self.api_table.setItem(index, 4, QTableWidgetItem(record.get("source_repository", "")))
+
+    def test_api_registry(self) -> None:
+        records = self.context.api_tester.test_all()
+        self.refresh_api_registry()
+        ok = sum(1 for record in records if record.get("last_test_status") == "ok")
+        QMessageBox.information(self, "API registry tested", f"Tested {len(records)} records. OK: {ok}.")
+
+    def reset_api_registry(self) -> None:
+        if QMessageBox.question(self, "Reset API registry", "Re-import all built-in API seed records? This replaces local registry edits.") != QMessageBox.StandardButton.Yes:
+            return
+        records = self.context.api_registry.import_seeds()
+        self.context.api_registry.normalize()
+        self.refresh_api_registry()
+        QMessageBox.information(self, "API registry reset", f"Imported {len(records)} seed API records.")
+
+    def add_api_record(self) -> None:
+        name, ok = QInputDialog.getText(self, "Add API", "API name:")
+        if not ok or not name.strip():
+            return
+        endpoint, ok = QInputDialog.getText(self, "Add API", "Endpoint URL:")
+        if not ok or not endpoint.strip():
+            return
+        category, ok = QInputDialog.getText(self, "Add API", "Category:", text="Research/API")
+        if not ok:
+            category = "Research/API"
+        records = self.context.api_registry.load()
+        records.append(
+            {
+                "name": name.strip(),
+                "category": category.strip() or "Research/API",
+                "endpoint": endpoint.strip(),
+                "auth_type": "optional-apiKey",
+                "pricing": "unknown",
+                "rate_limit": "unknown",
+                "supported_function": "user-added integration candidate",
+                "last_test_status": "not-tested",
+                "last_test_date": "",
+                "risk_notes": "User-added record; verify terms before use.",
+                "integration_status": "user-added",
+                "source_repository": "manual",
+                "notes": "",
+                "enabled": False,
+            }
+        )
+        self.context.api_registry.save(records)
+        self.refresh_api_registry()
 
     def refresh_brain_summary(self) -> None:
         index = json.loads(self.context.workflow_engine.brain_manager.index_path.read_text(encoding="utf-8"))

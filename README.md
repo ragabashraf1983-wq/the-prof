@@ -38,8 +38,8 @@ Implemented with **Python + PySide6**.
 
 Main capabilities:
 
-- dark desktop UI
-- project creation
+- dark desktop UI with logo in the home/sidebar surfaces
+- scrollable project creation form that works on smaller screens
 - topic intake
 - scope selection
 - dynamic setup question prompt
@@ -51,8 +51,9 @@ Main capabilities:
 - claim ledger
 - source audit
 - integrity report
-- provider router with Ollama + rule-based fallback
-- API registry seed importer/tester
+- provider router with Ollama, many OpenAI-compatible APIs, Google AI Studio, Anthropic, and rule-based fallback
+- Providers page for enabling LLMs, saving local API keys, adding custom providers, and switching local/API/paid/browser-login modes
+- API registry seed importer/tester plus manual API record entry
 - final Markdown output generation
 
 ### Current scopes supported in working form
@@ -70,14 +71,17 @@ Main capabilities:
 
 ### Provider support
 
-Implemented adapters:
+Implemented adapters and built-in provider profiles:
 
 - Ollama local provider
 - generic OpenAI-compatible provider
+- OpenAI, OpenRouter, Groq, Mistral, Cerebras, Hugging Face, SambaNova, DeepSeek, Together, Fireworks, Perplexity, NVIDIA NIM, GitHub Models
+- Google AI Studio wrapper
 - Anthropic wrapper
 - Kimi wrapper
 - GLM wrapper
-- browser-login stub (disabled by default)
+- custom OpenAI-compatible provider entry from the UI
+- browser-login stub (disabled by default and only for manual user login; it must not bypass site rules)
 - built-in deterministic fallback provider
 
 ### Brain memory
