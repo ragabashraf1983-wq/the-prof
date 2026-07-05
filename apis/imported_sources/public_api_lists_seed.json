@@ -1,0 +1,28 @@
+[
+  {
+    "name": "Semantic Scholar Graph API",
+    "category": "Research",
+    "endpoint": "https://api.semanticscholar.org/graph/v1",
+    "auth_type": "optional-apiKey",
+    "pricing": "free/unknown",
+    "rate_limit": "provider-specific",
+    "supported_function": "paper metadata and graph queries",
+    "risk_notes": "Check provider terms and quotas before enabling heavy use.",
+    "integration_status": "seeded",
+    "source_repository": "public-api-lists",
+    "notes": "Not yet implemented in The Prof v1."
+  },
+  {
+    "name": "CORE API",
+    "category": "Research",
+    "endpoint": "https://api.core.ac.uk/v3",
+    "auth_type": "apiKey",
+    "pricing": "unknown",
+    "rate_limit": "provider-specific",
+    "supported_function": "open access research discovery",
+    "risk_notes": "Requires user-provided credentials where applicable.",
+    "integration_status": "seeded",
+    "source_repository": "public-api-lists",
+    "notes": "Future extension candidate."
+  }
+]

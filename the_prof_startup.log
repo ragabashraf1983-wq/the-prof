@@ -1,0 +1,58 @@
+[05.07.2026 14:27:37,14] ========================================
+[05.07.2026 14:27:37,14] The Prof launcher started
+[05.07.2026 14:27:37,14] Working directory: C:\workstation\the-prof
+[05.07.2026 14:27:37,15] ========================================
+[05.07.2026 14:27:37,21] Found launcher: py -3
+[05.07.2026 14:27:37,21] Creating local virtual environment
+[05.07.2026 14:27:40,78] Upgrading pip
+Requirement already satisfied: pip in c:\workstation\the-prof\.venv\lib\site-packages (24.0)
+Collecting pip
+  Using cached pip-26.1.2-py3-none-any.whl.metadata (4.6 kB)
+Using cached pip-26.1.2-py3-none-any.whl (1.8 MB)
+Installing collected packages: pip
+  Attempting uninstall: pip
+    Found existing installation: pip 24.0
+    Uninstalling pip-24.0:
+      Successfully uninstalled pip-24.0
+Successfully installed pip-26.1.2
+[05.07.2026 14:27:59,25] Installing requirements
+Collecting PySide6<7,>=6.11 (from -r requirements.txt (line 1))
+  Downloading pyside6-6.11.1-cp310-abi3-win_amd64.whl.metadata (5.5 kB)
+Collecting PyYAML>=6.0 (from -r requirements.txt (line 2))
+  Using cached pyyaml-6.0.3-cp311-cp311-win_amd64.whl.metadata (2.4 kB)
+Collecting requests>=2.31 (from -r requirements.txt (line 3))
+  Using cached requests-2.34.2-py3-none-any.whl.metadata (4.8 kB)
+Collecting shiboken6==6.11.1 (from PySide6<7,>=6.11->-r requirements.txt (line 1))
+  Downloading shiboken6-6.11.1-cp310-abi3-win_amd64.whl.metadata (2.5 kB)
+Collecting PySide6_Essentials==6.11.1 (from PySide6<7,>=6.11->-r requirements.txt (line 1))
+  Downloading pyside6_essentials-6.11.1-cp310-abi3-win_amd64.whl.metadata (3.8 kB)
+Collecting PySide6_Addons==6.11.1 (from PySide6<7,>=6.11->-r requirements.txt (line 1))
+  Downloading pyside6_addons-6.11.1-cp310-abi3-win_amd64.whl.metadata (4.2 kB)
+Collecting charset_normalizer<4,>=2 (from requests>=2.31->-r requirements.txt (line 3))
+  Using cached charset_normalizer-3.4.7-cp311-cp311-win_amd64.whl.metadata (41 kB)
+Collecting idna<4,>=2.5 (from requests>=2.31->-r requirements.txt (line 3))
+  Using cached idna-3.18-py3-none-any.whl.metadata (6.1 kB)
+Collecting urllib3<3,>=1.26 (from requests>=2.31->-r requirements.txt (line 3))
+  Using cached urllib3-2.7.0-py3-none-any.whl.metadata (6.9 kB)
+Collecting certifi>=2023.5.7 (from requests>=2.31->-r requirements.txt (line 3))
+  Using cached certifi-2026.6.17-py3-none-any.whl.metadata (2.5 kB)
+Downloading pyside6-6.11.1-cp310-abi3-win_amd64.whl (578 kB)
+   ---------------------------------------- 578.4/578.4 kB 2.5 MB/s  0:00:00
+Downloading pyside6_addons-6.11.1-cp310-abi3-win_amd64.whl (168.8 MB)
+   ---------------------------------------- 168.8/168.8 MB 52.1 MB/s  0:00:03
+Downloading pyside6_essentials-6.11.1-cp310-abi3-win_amd64.whl (77.5 MB)
+   ---------------------------------------- 77.5/77.5 MB 81.1 MB/s  0:00:00
+Downloading shiboken6-6.11.1-cp310-abi3-win_amd64.whl (1.2 MB)
+   ---------------------------------------- 1.2/1.2 MB 60.1 MB/s  0:00:00
+Using cached pyyaml-6.0.3-cp311-cp311-win_amd64.whl (158 kB)
+Using cached requests-2.34.2-py3-none-any.whl (73 kB)
+Using cached charset_normalizer-3.4.7-cp311-cp311-win_amd64.whl (159 kB)
+Using cached idna-3.18-py3-none-any.whl (65 kB)
+Using cached urllib3-2.7.0-py3-none-any.whl (131 kB)
+Using cached certifi-2026.6.17-py3-none-any.whl (133 kB)
+Installing collected packages: urllib3, shiboken6, PyYAML, idna, charset_normalizer, certifi, requests, PySide6_Essentials, PySide6_Addons, PySide6
+
+Successfully installed PySide6-6.11.1 PySide6_Addons-6.11.1 PySide6_Essentials-6.11.1 PyYAML-6.0.3 certifi-2026.6.17 charset_normalizer-3.4.7 idna-3.18 requests-2.34.2 shiboken6-6.11.1 urllib3-2.7.0
+[05.07.2026 14:28:24,23] Launching application
+QFont::setPointSize: Point size <= 0 (-1), must be greater than 0
+QWindowsWindow::setGeometry: Unable to set geometry 3841x2774+0+52 (frame: 3869x2853-14-13) on QWidgetWindow/"MainWindowClassWindow" on "SAMSUNG". Resulting geometry: 3840x2001+0+51 (frame: 3868x2080-14-14) margins: 14, 65, 14, 14 minimum size: 807x1233 MINMAXINFO(maxSize=POINT(x=0, y=0), maxpos=POINT(x=0, y=0), maxtrack=POINT(x=0, y=0), mintrack=POINT(x=1844, y=2853)))

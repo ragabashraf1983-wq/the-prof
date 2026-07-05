@@ -1,0 +1,43 @@
+{
+  "app_name": "The Prof",
+  "theme": "dark",
+  "project_storage_dir": "projects",
+  "brain_enabled": true,
+  "auto_suggest_memory_additions": true,
+  "auto_save_verified_memory": false,
+  "require_user_approval_for_memory_additions": true,
+  "stable_revalidation_days": 180,
+  "slow_changing_revalidation_days": 60,
+  "time_sensitive_revalidation_days": 14,
+  "default_citation_style": "APA 7",
+  "default_output_language": "English",
+  "strictness_level": "strict",
+  "max_autonomous_iterations": 3,
+  "max_provider_failures_before_fallback": 2,
+  "ollama_base_url": "http://localhost:11434",
+  "default_local_model": "llama3.2",
+  "online_api_enabled": false,
+  "paid_api_enabled": false,
+  "browser_login_enabled": false,
+  "local_only_mode": true,
+  "provider_fallback_order": [
+    "ollama",
+    "openrouter",
+    "groq",
+    "google-ai-studio",
+    "openai",
+    "anthropic",
+    "mistral",
+    "kimi",
+    "glm",
+    "cerebras",
+    "huggingface-inference",
+    "sambanova",
+    "rules"
+  ],
+  "agent_model_assignments": {
+    "default": "default_local_model",
+    "review": "default_local_model",
+    "planning": "default_local_model"
+  }
+}

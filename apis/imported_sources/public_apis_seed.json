@@ -1,0 +1,54 @@
+[
+  {
+    "name": "Crossref Works API",
+    "category": "Research",
+    "endpoint": "https://api.crossref.org/works",
+    "auth_type": "none",
+    "pricing": "free",
+    "rate_limit": "polite use required",
+    "supported_function": "doi lookup and metadata search",
+    "risk_notes": "Metadata can be incomplete; verify title/author alignment.",
+    "integration_status": "implemented",
+    "source_repository": "public-apis",
+    "notes": "Used by The Prof for source metadata and citation validation."
+  },
+  {
+    "name": "OpenAlex Works API",
+    "category": "Research",
+    "endpoint": "https://api.openalex.org/works",
+    "auth_type": "none",
+    "pricing": "free",
+    "rate_limit": "reasonable use",
+    "supported_function": "scholarly metadata search",
+    "risk_notes": "Result ranking can be broad for ambiguous topics.",
+    "integration_status": "implemented",
+    "source_repository": "public-api-lists",
+    "notes": "Used for open scholarly discovery."
+  },
+  {
+    "name": "arXiv API",
+    "category": "Research",
+    "endpoint": "https://export.arxiv.org/api/query",
+    "auth_type": "none",
+    "pricing": "free",
+    "rate_limit": "polite use required",
+    "supported_function": "preprint search",
+    "risk_notes": "Preprint metadata does not imply peer review.",
+    "integration_status": "implemented",
+    "source_repository": "public-apis",
+    "notes": "Used for preprint discovery and verification."
+  },
+  {
+    "name": "Europe PMC API",
+    "category": "Research",
+    "endpoint": "https://www.ebi.ac.uk/europepmc/webservices/rest/search",
+    "auth_type": "none",
+    "pricing": "free",
+    "rate_limit": "unknown",
+    "supported_function": "biomedical literature search",
+    "risk_notes": "Not yet implemented in v1.",
+    "integration_status": "seeded",
+    "source_repository": "public-api-lists",
+    "notes": "Candidate future addition for biomedical workflows."
+  }
+]
