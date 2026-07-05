@@ -15,9 +15,32 @@ class ProviderCatalog:
 
     def load(self) -> list[dict[str, Any]]:
         try:
-            return json.loads(self.storage_path.read_text(encoding="utf-8"))
+            stored = json.loads(self.storage_path.read_text(encoding="utf-8"))
         except Exception:
-            return json.loads(self.default_path.read_text(encoding="utf-8"))
+            stored = []
+        try:
+            defaults = json.loads(self.default_path.read_text(encoding="utf-8"))
+        except Exception:
+            defaults = []
+        if not stored:
+            return defaults
+        stored_by_name = {profile.get("name"): profile for profile in stored}
+        changed = False
+        for default in defaults:
+            name = default.get("name")
+            if name and name not in stored_by_name:
+                stored.append(default)
+                changed = True
+            elif name:
+                # Add new non-secret metadata fields such as signup_url without
+                # overwriting the user's enabled/model/base-url choices.
+                for key, value in default.items():
+                    if key not in stored_by_name[name]:
+                        stored_by_name[name][key] = value
+                        changed = True
+        if changed:
+            self.save(stored)
+        return stored
 
     def save(self, profiles: list[dict[str, Any]]) -> None:
         self.storage_path.write_text(json.dumps(profiles, indent=2, ensure_ascii=False), encoding="utf-8")

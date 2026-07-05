@@ -84,7 +84,12 @@ class ProviderRouter:
             return preferred_order
         configured = self.settings.get("provider_fallback_order", ["ollama", "rules"])
         if self.settings.get("local_only_mode", True):
-            return [name for name in configured if name in {"ollama", "rules"}] or ["rules"]
+            local_names = {"ollama", "lm-studio", "llama-cpp-server", "rules"}
+            if self.catalog:
+                for profile in self.catalog.load():
+                    if profile.get("provider_type") == "local":
+                        local_names.add(profile.get("name", ""))
+            return [name for name in configured if name in local_names] or ["rules"]
         return configured
 
     def _enabled(self, provider_name: str) -> bool:
@@ -97,7 +102,7 @@ class ProviderRouter:
                 return False
             provider_type = profile.get("provider_type", "")
             adapter = profile.get("adapter", "")
-            if self.settings.get("local_only_mode", True) and provider_name not in {"ollama", "rules"}:
+            if self.settings.get("local_only_mode", True) and provider_type not in {"local"} and provider_name != "rules":
                 return False
             if provider_type == "api" and not self.settings.get("online_api_enabled", False):
                 return False
@@ -108,7 +113,7 @@ class ProviderRouter:
             return True
         return True
 
-    def generate(self, task: str, prompt: str, preferred_order: list[str] | None = None, model: str = "") -> ProviderResult:
+    def generate(self, task: str, prompt: str, preferred_order: list[str] | None = None, model: str = "", temperature: float = 0.0) -> ProviderResult:
         order = self._effective_order(preferred_order)
         max_failures = int(self.settings.get("max_provider_failures_before_fallback", 2))
         last_error = ""
@@ -125,7 +130,7 @@ class ProviderRouter:
                 last_error = message
                 self.usage.record(provider_name, model or "", task, False, message)
                 continue
-            result = provider.generate(prompt, model=model)
+            result = provider.generate(prompt, model=model, temperature=temperature)
             self.usage.record(provider_name, result.model, task, result.success, result.error)
             if result.success:
                 if idx > 0:

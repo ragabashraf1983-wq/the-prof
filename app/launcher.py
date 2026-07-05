@@ -60,6 +60,14 @@ class AppContext:
             "PERPLEXITY_API_KEY",
             "NVIDIA_API_KEY",
             "GITHUB_MODELS_TOKEN",
+            "GITHUB_TOKEN",
+            "FREELLMAPI_KEY",
+            "AIONLABS_API_KEY",
+            "VERCEL_AI_GATEWAY_API_KEY",
+            "OPENCODE_ZEN_API_KEY",
+            "POLLINATIONS_API_KEY",
+            "LLM7_API_KEY",
+            "OVH_AI_ENDPOINTS_KEY",
         ]:
             value = self.secrets_store.get_secret(name)
             if value:

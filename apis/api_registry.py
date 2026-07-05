@@ -27,7 +27,21 @@ class APIRegistry:
     def load(self) -> list[dict[str, Any]]:
         if not self.registry_path.exists():
             return self.import_seeds()
-        return json.loads(self.registry_path.read_text(encoding="utf-8"))
+        records = json.loads(self.registry_path.read_text(encoding="utf-8"))
+        # Merge newly added seed records into existing user registries without
+        # deleting manual additions or test statuses.
+        existing = {(r.get("name", ""), r.get("endpoint", "")) for r in records}
+        changed = False
+        for seed_file in sorted(self.seed_dir.glob("*.json")):
+            for record in json.loads(seed_file.read_text(encoding="utf-8")):
+                key = (record.get("name", ""), record.get("endpoint", ""))
+                if key not in existing:
+                    records.append(record)
+                    existing.add(key)
+                    changed = True
+        if changed:
+            self.save(records)
+        return records
 
     def save(self, records: list[dict[str, Any]]) -> None:
         self.registry_path.write_text(json.dumps(records, indent=2, ensure_ascii=False), encoding="utf-8")

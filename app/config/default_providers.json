@@ -11,7 +11,8 @@
     "enabled": true,
     "paid": false,
     "experimental": false,
-    "notes": "Primary local-first provider."
+    "notes": "Local model provider. Install Ollama, run `ollama pull llama3.2`, then restart The Prof.",
+    "signup_url": "https://ollama.com/download"
   },
   {
     "name": "openai",
@@ -25,7 +26,8 @@
     "enabled": false,
     "paid": true,
     "experimental": false,
-    "notes": "Official OpenAI-compatible endpoint."
+    "notes": "Official OpenAI-compatible endpoint.",
+    "signup_url": "https://platform.openai.com/api-keys"
   },
   {
     "name": "anthropic",
@@ -39,7 +41,8 @@
     "enabled": false,
     "paid": true,
     "experimental": false,
-    "notes": "Official Anthropic adapter."
+    "notes": "Official Anthropic adapter.",
+    "signup_url": "https://console.anthropic.com/settings/keys"
   },
   {
     "name": "google-ai-studio",
@@ -47,13 +50,14 @@
     "provider_type": "api",
     "category": "Free API",
     "base_url": "https://generativelanguage.googleapis.com/v1beta/models",
-    "model": "gemini-2.0-flash",
+    "model": "gemini-2.5-flash",
     "api_key_env": "GOOGLE_API_KEY",
     "adapter": "google-ai-studio",
     "enabled": false,
     "paid": false,
     "experimental": false,
-    "notes": "Free-tier capable depending on Google account and region."
+    "notes": "Free-tier capable depending on Google account and region.",
+    "signup_url": "https://aistudio.google.com/app/apikey"
   },
   {
     "name": "openrouter",
@@ -67,7 +71,8 @@
     "enabled": false,
     "paid": false,
     "experimental": false,
-    "notes": "OpenAI-compatible router with free and paid models."
+    "notes": "OpenAI-compatible router with free and paid models.",
+    "signup_url": "https://openrouter.ai/keys"
   },
   {
     "name": "groq",
@@ -75,13 +80,14 @@
     "provider_type": "api",
     "category": "Free API",
     "base_url": "https://api.groq.com/openai/v1",
-    "model": "llama-3.1-8b-instant",
+    "model": "llama-3.3-70b-versatile",
     "api_key_env": "GROQ_API_KEY",
     "adapter": "openai-compatible",
     "enabled": false,
     "paid": false,
     "experimental": false,
-    "notes": "OpenAI-compatible Groq endpoint."
+    "notes": "OpenAI-compatible Groq endpoint.",
+    "signup_url": "https://console.groq.com/keys"
   },
   {
     "name": "kimi",
@@ -95,7 +101,8 @@
     "enabled": false,
     "paid": true,
     "experimental": false,
-    "notes": "Moonshot / Kimi family."
+    "notes": "Moonshot / Kimi family.",
+    "signup_url": "https://platform.moonshot.ai/console/api-keys"
   },
   {
     "name": "glm",
@@ -103,13 +110,14 @@
     "provider_type": "api",
     "category": "Paid API",
     "base_url": "https://open.bigmodel.cn/api/paas/v4",
-    "model": "glm-4-flash",
+    "model": "glm-4.7-flash",
     "api_key_env": "GLM_API_KEY",
     "adapter": "openai-compatible",
     "enabled": false,
     "paid": true,
     "experimental": false,
-    "notes": "BigModel GLM family."
+    "notes": "BigModel GLM family.",
+    "signup_url": "https://open.bigmodel.cn/usercenter/apikeys"
   },
   {
     "name": "mistral",
@@ -123,7 +131,8 @@
     "enabled": false,
     "paid": false,
     "experimental": false,
-    "notes": "Can be free-tier or trial depending on account status."
+    "notes": "Can be free-tier or trial depending on account status.",
+    "signup_url": "https://console.mistral.ai/api-keys"
   },
   {
     "name": "cerebras",
@@ -137,7 +146,8 @@
     "enabled": false,
     "paid": false,
     "experimental": false,
-    "notes": "Free/trial depending on account."
+    "notes": "Free/trial depending on account.",
+    "signup_url": "https://cloud.cerebras.ai/platform/org/personal/api-keys"
   },
   {
     "name": "huggingface-inference",
@@ -151,7 +161,8 @@
     "enabled": false,
     "paid": false,
     "experimental": true,
-    "notes": "Provider compatibility varies by selected upstream model/provider."
+    "notes": "Provider compatibility varies by selected upstream model/provider.",
+    "signup_url": "https://huggingface.co/settings/tokens"
   },
   {
     "name": "sambanova",
@@ -165,7 +176,8 @@
     "enabled": false,
     "paid": false,
     "experimental": true,
-    "notes": "Trial/free-tier dependent."
+    "notes": "Trial/free-tier dependent.",
+    "signup_url": "https://cloud.sambanova.ai/apis"
   },
   {
     "name": "cloudflare-workers-ai",
@@ -179,7 +191,8 @@
     "enabled": false,
     "paid": false,
     "experimental": true,
-    "notes": "Requires account-specific endpoint path; keep disabled until user configures account id."
+    "notes": "Requires account-specific endpoint path; keep disabled until user configures account id.",
+    "signup_url": "https://dash.cloudflare.com/profile/api-tokens"
   },
   {
     "name": "browser-login",
@@ -221,7 +234,8 @@
     "enabled": false,
     "paid": true,
     "experimental": false,
-    "notes": "OpenAI-compatible DeepSeek endpoint; often low-cost/trial depending on account."
+    "notes": "OpenAI-compatible DeepSeek endpoint; often low-cost/trial depending on account.",
+    "signup_url": "https://platform.deepseek.com/api_keys"
   },
   {
     "name": "together",
@@ -235,7 +249,8 @@
     "enabled": false,
     "paid": false,
     "experimental": false,
-    "notes": "OpenAI-compatible; free/trial credits may be available depending on account."
+    "notes": "OpenAI-compatible; free/trial credits may be available depending on account.",
+    "signup_url": "https://api.together.ai/settings/api-keys"
   },
   {
     "name": "fireworks",
@@ -249,7 +264,8 @@
     "enabled": false,
     "paid": false,
     "experimental": false,
-    "notes": "OpenAI-compatible; free/trial usage depends on account."
+    "notes": "OpenAI-compatible; free/trial usage depends on account.",
+    "signup_url": "https://fireworks.ai/account/api-keys"
   },
   {
     "name": "perplexity",
@@ -263,7 +279,8 @@
     "enabled": false,
     "paid": true,
     "experimental": false,
-    "notes": "OpenAI-compatible chat endpoint for Perplexity Sonar models."
+    "notes": "OpenAI-compatible chat endpoint for Perplexity Sonar models.",
+    "signup_url": "https://www.perplexity.ai/settings/api"
   },
   {
     "name": "nvidia-nim",
@@ -277,20 +294,157 @@
     "enabled": false,
     "paid": false,
     "experimental": false,
-    "notes": "NVIDIA hosted NIM OpenAI-compatible endpoint; free credits may require login."
+    "notes": "NVIDIA hosted NIM OpenAI-compatible endpoint; free credits may require login.",
+    "signup_url": "https://build.nvidia.com/"
   },
   {
     "name": "github-models",
     "label": "GitHub Models",
     "provider_type": "api",
     "category": "Free API",
-    "base_url": "https://models.inference.ai.azure.com",
-    "model": "gpt-4o-mini",
-    "api_key_env": "GITHUB_MODELS_TOKEN",
+    "base_url": "https://models.github.ai/inference",
+    "model": "gpt-4.1-mini",
+    "api_key_env": "GITHUB_TOKEN",
     "adapter": "openai-compatible",
     "enabled": false,
     "paid": false,
     "experimental": true,
-    "notes": "OpenAI-compatible GitHub Models/Azure AI inference endpoint; availability depends on GitHub account."
+    "notes": "OpenAI-compatible GitHub Models/Azure AI inference endpoint; availability depends on GitHub account.",
+    "signup_url": "https://github.com/marketplace/models"
+  },
+  {
+    "name": "freellmapi-local",
+    "label": "FreeLLMAPI Local Router",
+    "provider_type": "api",
+    "category": "Local Gateway",
+    "base_url": "http://127.0.0.1:3001/v1",
+    "model": "auto",
+    "api_key_env": "FREELLMAPI_KEY",
+    "adapter": "openai-compatible",
+    "enabled": false,
+    "paid": false,
+    "experimental": false,
+    "signup_url": "https://github.com/tashfeenahmed/freellmapi",
+    "notes": "Run FreeLLMAPI locally, add provider keys in its dashboard, then paste the unified key here."
+  },
+  {
+    "name": "aionlabs",
+    "label": "Aion Labs",
+    "provider_type": "api",
+    "category": "Free API",
+    "base_url": "https://api.aionlabs.ai/v1",
+    "model": "aion-2.5",
+    "api_key_env": "AIONLABS_API_KEY",
+    "adapter": "openai-compatible",
+    "enabled": false,
+    "paid": false,
+    "experimental": true,
+    "signup_url": "https://www.aionlabs.ai",
+    "notes": "Permanent free tier reported by awesome-free-llm-apis; roleplay/storytelling specialized."
+  },
+  {
+    "name": "vercel-ai-gateway",
+    "label": "Vercel AI Gateway",
+    "provider_type": "api",
+    "category": "Free API",
+    "base_url": "https://ai-gateway.vercel.sh/v1",
+    "model": "openai/gpt-4o-mini",
+    "api_key_env": "VERCEL_AI_GATEWAY_API_KEY",
+    "adapter": "openai-compatible",
+    "enabled": false,
+    "paid": false,
+    "experimental": true,
+    "signup_url": "https://vercel.com/docs/ai-gateway",
+    "notes": "Gateway to multiple providers. Requires Vercel account/token."
+  },
+  {
+    "name": "opencode-zen",
+    "label": "OpenCode Zen",
+    "provider_type": "api",
+    "category": "Free API",
+    "base_url": "https://api.opencode.ai/v1",
+    "model": "deepseek-v4-flash-free",
+    "api_key_env": "OPENCODE_ZEN_API_KEY",
+    "adapter": "openai-compatible",
+    "enabled": false,
+    "paid": false,
+    "experimental": true,
+    "signup_url": "https://opencode.ai/docs/zen/",
+    "notes": "Free/promotional models; verify current endpoint and model names."
+  },
+  {
+    "name": "pollinations",
+    "label": "Pollinations AI Text",
+    "provider_type": "api",
+    "category": "Free API",
+    "base_url": "https://text.pollinations.ai/openai",
+    "model": "openai",
+    "api_key_env": "POLLINATIONS_API_KEY",
+    "adapter": "openai-compatible",
+    "enabled": false,
+    "paid": false,
+    "experimental": true,
+    "signup_url": "https://pollinations.ai/",
+    "notes": "Often works anonymously; leave API key blank if provider allows it. Enable only after checking terms."
+  },
+  {
+    "name": "llm7",
+    "label": "LLM7",
+    "provider_type": "api",
+    "category": "Free API",
+    "base_url": "https://api.llm7.io/v1",
+    "model": "gpt-oss-20b",
+    "api_key_env": "LLM7_API_KEY",
+    "adapter": "openai-compatible",
+    "enabled": false,
+    "paid": false,
+    "experimental": true,
+    "signup_url": "https://llm7.io/",
+    "notes": "Community/free gateway; reliability and terms may change."
+  },
+  {
+    "name": "ovh-ai-endpoints",
+    "label": "OVH AI Endpoints",
+    "provider_type": "api",
+    "category": "Free API",
+    "base_url": "https://oai.endpoints.kepler.ai.cloud.ovh.net/v1",
+    "model": "Meta-Llama-3_3-70B-Instruct",
+    "api_key_env": "OVH_AI_ENDPOINTS_KEY",
+    "adapter": "openai-compatible",
+    "enabled": false,
+    "paid": false,
+    "experimental": true,
+    "signup_url": "https://endpoints.ai.cloud.ovh.net/",
+    "notes": "OVH AI Endpoints. Verify exact endpoint/model from OVH dashboard."
+  },
+  {
+    "name": "lm-studio",
+    "label": "LM Studio Local Server",
+    "provider_type": "local",
+    "category": "Local",
+    "base_url": "http://127.0.0.1:1234/v1",
+    "model": "local-model",
+    "api_key_env": "",
+    "adapter": "openai-compatible",
+    "enabled": false,
+    "paid": false,
+    "experimental": false,
+    "signup_url": "https://lmstudio.ai/",
+    "notes": "Start LM Studio local server and load a chat model."
+  },
+  {
+    "name": "llama-cpp-server",
+    "label": "llama.cpp Local Server",
+    "provider_type": "local",
+    "category": "Local",
+    "base_url": "http://127.0.0.1:8080/v1",
+    "model": "local-model",
+    "api_key_env": "",
+    "adapter": "openai-compatible",
+    "enabled": false,
+    "paid": false,
+    "experimental": false,
+    "signup_url": "https://github.com/ggml-org/llama.cpp",
+    "notes": "Start llama.cpp server with OpenAI-compatible API enabled."
   }
 ]

@@ -54,7 +54,9 @@ Main capabilities:
 - provider router with Ollama, many OpenAI-compatible APIs, Google AI Studio, Anthropic, and rule-based fallback
 - Providers page for enabling LLMs, saving local API keys, adding custom providers, and switching local/API/paid/browser-login modes
 - API registry seed importer/tester plus manual API record entry
-- final Markdown output generation
+- expanded free academic source search using Semantic Scholar, OpenAlex, Crossref, PubMed, arXiv, and OpenCitations metadata
+- non-technical Help page for connecting providers and adding custom APIs
+- final Markdown output generation with an explicit notice when no real LLM provider was used
 
 ### Current scopes supported in working form
 
@@ -75,7 +77,7 @@ Implemented adapters and built-in provider profiles:
 
 - Ollama local provider
 - generic OpenAI-compatible provider
-- OpenAI, OpenRouter, Groq, Mistral, Cerebras, Hugging Face, SambaNova, DeepSeek, Together, Fireworks, Perplexity, NVIDIA NIM, GitHub Models
+- OpenAI, OpenRouter, Groq, Mistral, Cerebras, Hugging Face, SambaNova, DeepSeek, Together, Fireworks, Perplexity, NVIDIA NIM, GitHub Models, FreeLLMAPI local router, LM Studio, llama.cpp server, Aion Labs, Vercel AI Gateway, OpenCode Zen, Pollinations, LLM7, OVH AI Endpoints
 - Google AI Studio wrapper
 - Anthropic wrapper
 - Kimi wrapper

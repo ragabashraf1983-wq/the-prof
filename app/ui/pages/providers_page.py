@@ -3,7 +3,8 @@ from __future__ import annotations
 import os
 from typing import Any
 
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, QUrl
+from PySide6.QtGui import QDesktopServices
 from PySide6.QtWidgets import (
     QCheckBox,
     QComboBox,
@@ -133,14 +134,17 @@ class ProvidersPage(QWidget):
 
         actions = QHBoxLayout()
         add = QPushButton("Add Provider")
+        open_signup = QPushButton("Open Signup/Login for Selected")
         save = QPushButton("Save Providers and Keys")
         test = QPushButton("Refresh/Test Availability")
         reset = QPushButton("Reset Default Providers")
         add.clicked.connect(self.add_provider)
+        open_signup.clicked.connect(self.open_selected_signup)
         save.clicked.connect(self.save)
         test.clicked.connect(self.refresh)
         reset.clicked.connect(self.reset_defaults)
         actions.addWidget(add)
+        actions.addWidget(open_signup)
         actions.addStretch(1)
         actions.addWidget(test)
         actions.addWidget(reset)
@@ -233,6 +237,17 @@ class ProvidersPage(QWidget):
         self.context.provider_catalog.save(self.profiles)
         self.context.workflow_engine.provider_router.providers = self.context.workflow_engine.provider_router._build_providers()
         self.refresh()
+
+    def open_selected_signup(self) -> None:
+        row = self.table.currentRow()
+        if row < 0 or row >= len(self.profiles):
+            QMessageBox.information(self, "Select provider", "Click a provider row first.")
+            return
+        url = self.profiles[row].get("signup_url", "")
+        if not url:
+            QMessageBox.information(self, "No link", "This provider profile has no signup/login URL yet.")
+            return
+        QDesktopServices.openUrl(QUrl(url))
 
     def reset_defaults(self) -> None:
         if QMessageBox.question(self, "Reset providers", "Reset provider list to the built-in defaults? Saved API keys are not deleted.") != QMessageBox.StandardButton.Yes:

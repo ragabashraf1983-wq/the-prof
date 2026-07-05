@@ -70,12 +70,15 @@ class SettingsPage(QWidget):
         self.iterations.setRange(1, 25)
         self.failures = QSpinBox()
         self.failures.setRange(1, 10)
+        self.max_sources = QSpinBox()
+        self.max_sources.setRange(3, 100)
         self.fallback_order = QLineEdit()
         self.fallback_order.setPlaceholderText("ollama, openrouter, groq, google-ai-studio, rules")
         safety_form.addRow(self.brain)
         safety_form.addRow(self.auto_memory)
         safety_form.addRow("Max autonomous iterations", self.iterations)
         safety_form.addRow("Provider failures before fallback", self.failures)
+        safety_form.addRow("Max academic source records", self.max_sources)
         safety_form.addRow("Provider fallback order", self.fallback_order)
         layout.addWidget(safety)
 
@@ -102,6 +105,7 @@ class SettingsPage(QWidget):
         self.auto_memory.setChecked(bool(s.get("auto_suggest_memory_additions", True)))
         self.iterations.setValue(int(s.get("max_autonomous_iterations", 3)))
         self.failures.setValue(int(s.get("max_provider_failures_before_fallback", 2)))
+        self.max_sources.setValue(int(s.get("max_source_results", 24)))
         self.fallback_order.setText(", ".join(s.get("provider_fallback_order", ["ollama", "rules"])))
 
     def save_settings(self) -> None:
@@ -121,6 +125,7 @@ class SettingsPage(QWidget):
                 "auto_suggest_memory_additions": self.auto_memory.isChecked(),
                 "max_autonomous_iterations": self.iterations.value(),
                 "max_provider_failures_before_fallback": self.failures.value(),
+                "max_source_results": self.max_sources.value(),
                 "provider_fallback_order": [p.strip() for p in self.fallback_order.text().split(",") if p.strip()],
             }
         )

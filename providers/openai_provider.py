@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import os
 from typing import Any
+from urllib.parse import urlparse
 
 import requests
 
@@ -19,13 +20,26 @@ class OpenAICompatibleProvider(BaseProvider):
         self.default_model = default_model
 
     def _headers(self) -> dict[str, str]:
-        api_key = os.getenv(self.api_key_env, "")
-        return {
-            "Authorization": f"Bearer {api_key}",
-            "Content-Type": "application/json",
-        }
+        api_key = os.getenv(self.api_key_env, "") if self.api_key_env else ""
+        headers = {"Content-Type": "application/json"}
+        if api_key:
+            headers["Authorization"] = f"Bearer {api_key}"
+        return headers
 
     def is_available(self) -> tuple[bool, str]:
+        if not self.base_url:
+            return False, "Missing OpenAI-compatible base URL."
+        if not self.api_key_env:
+            host = urlparse(self.base_url).hostname or ""
+            if host in {"127.0.0.1", "localhost"}:
+                try:
+                    response = requests.get(f"{self.base_url}/models", headers=self._headers(), timeout=2)
+                    if response.status_code < 500:
+                        return True, "Local OpenAI-compatible endpoint responded."
+                    return False, f"Local endpoint returned HTTP {response.status_code}."
+                except Exception as exc:
+                    return False, f"Local endpoint not reachable: {exc}"
+            return True, "No API key configured/required; provider will be tried directly."
         if not os.getenv(self.api_key_env):
             return False, f"Missing environment variable {self.api_key_env}."
         return True, f"API key env {self.api_key_env} is set."

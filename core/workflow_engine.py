@@ -88,7 +88,12 @@ class WorkflowEngine:
             workflow_plan.append(f"- **{stage.name}** — {stage.description}")
         (project_path / "workflow_plan.md").write_text("\n".join(workflow_plan), encoding="utf-8")
 
-        sources = self.source_search.search(intake.topic, online_allowed=intake.online_search_allowed and not intake.local_only_mode)
+        # Source discovery is controlled by the explicit online_search_allowed
+        # intake flag.  Model local-only mode must not silently disable free
+        # academic metadata APIs, otherwise the app appears to run but has no
+        # evidence base.
+        max_sources = int(self.settings.get("max_source_results", 24))
+        sources = self.source_search.search(intake.topic, online_allowed=intake.online_search_allowed, max_results=max_sources)
         for source in sources:
             status, notes = self.citation_validator.validate(source, online_allowed=intake.online_search_allowed)
             source.verification_status = status if status in {"verified", "unverified"} else "partially verified"
@@ -140,8 +145,11 @@ class WorkflowEngine:
 
         draft_body = self._build_primary_output(intake, sources, claims, memory_lines)
         llm_augmented_body = self._llm_enhance_primary_output(intake, sources, draft_body)
+        real_llm_used = bool(llm_augmented_body)
         if llm_augmented_body:
             draft_body = llm_augmented_body
+        else:
+            draft_body += self._build_no_real_llm_notice()
 
         review_prompt = (
             "Review the following academic draft conservatively. List only issues that can be justified by the provided text. "
@@ -227,19 +235,39 @@ class WorkflowEngine:
         if not sources:
             return ""
         evidence_lines = []
-        for source in sources[:8]:
+        for source in sources[:18]:
+            abstract = (source.abstract or "")[:900]
+            authors = ", ".join(source.authors[:4])
             evidence_lines.append(
-                f"- {source.source_id}: {source.title} | year={source.year or 'Do not know.'} | venue={source.venue or source.source_type}"
+                f"- {source.source_id}: {source.title} | authors={authors or 'Do not know.'} | year={source.year or 'Do not know.'} | "
+                f"venue={source.venue or source.source_type} | doi={source.doi or 'Do not know.'} | url={source.url or 'Do not know.'} | "
+                f"provenance={source.provenance} | abstract={abstract or 'Do not know.'}"
             )
         prompt = (
-            f"Rewrite the following {intake.scope} draft into a clearer academic Markdown output. "
-            "Rules: use only the provided evidence list and existing draft content; do not invent any citation, DOI, result, quote, statistic, or claim; "
-            "if support is missing, write exactly Do not know.; keep the output conservative; preserve headings in Markdown.\n\n"
-            "Evidence list:\n" + "\n".join(evidence_lines) + "\n\n"
-            "Draft to improve:\n" + draft_body[:8000]
+            f"You are The Prof academic writing engine. Produce a substantive {intake.scope} in Markdown for the topic: {intake.topic}.\n"
+            "Use ONLY the evidence records below and the draft scaffold. Do not invent citations, study results, datasets, methods, or numbers. "
+            "Every evidence-based sentence should cite source IDs in square brackets like [SRC-OA-0001]. "
+            "Separate verified facts, cautious interpretation, and unknowns. If evidence is missing, write exactly Do not know. "
+            "Include these sections where relevant: Executive Summary, Search Strategy, Evidence Table, Thematic Synthesis, Gaps/Opportunities, Proposed Research Questions, Limitations, Next Steps, References. "
+            "Make the output useful and detailed, not a placeholder.\n\n"
+            "Evidence records:\n" + "\n".join(evidence_lines) + "\n\n"
+            "Existing conservative scaffold:\n" + draft_body[:9000]
         )
-        result = self.provider_router.generate("draft_rewrite", prompt)
-        return result.text.strip() if result.success and result.text.strip() else ""
+        result = self.provider_router.generate("evidence_grounded_draft", prompt, temperature=0.2)
+        text = result.text.strip() if result.success and result.text else ""
+        if result.provider_name in {"rules", "none"}:
+            return ""
+        if len(text) < 1200 or "Rule-based provider fallback" in text:
+            return ""
+        return text
+
+    def _build_no_real_llm_notice(self) -> str:
+        return (
+            "\n\n## Model Generation Notice\n\n"
+            "- No real language-model provider completed the drafting step in this run. The report above was produced by The Prof's deterministic evidence scaffold, not by an LLM.\n"
+            "- To generate a richer narrative: open **Providers**, disable Local-only if you want cloud models, enable at least one provider, paste a valid API key, click **Save Providers and Keys**, then run again.\n"
+            "- Recommended free/easy first choices: Ollama local, Google AI Studio, Groq, OpenRouter free models, Mistral experiment tier, Cerebras, NVIDIA NIM, GitHub Models, Hugging Face, or a local FreeLLMAPI proxy.\n"
+        )
 
     def _build_memory_report(self, memory_hits, project_id: str) -> str:
         lines = ["# Memory Report", "", f"- Project: {project_id}", "", "## Retrieved Memory Facts", ""]

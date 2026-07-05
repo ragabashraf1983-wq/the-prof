@@ -29,6 +29,7 @@ from the_prof.app.ui.pages.brain_page import BrainPage
 from the_prof.core.models import ProjectIntake
 from the_prof.app.ui.pages.dashboard_page import DashboardPage
 from the_prof.app.ui.pages.home_page import HomePage
+from the_prof.app.ui.pages.help_page import HelpPage
 from the_prof.app.ui.pages.new_project_page import NewProjectPage
 from the_prof.app.ui.pages.providers_page import ProvidersPage
 from the_prof.app.ui.pages.settings_page import SettingsPage
@@ -50,6 +51,7 @@ class MainWindow(QMainWindow):
         "Providers",
         "API Registry",
         "Settings",
+        "Help",
         "Logs",
         "Agent Skills",
         "Exports",
@@ -153,6 +155,7 @@ class MainWindow(QMainWindow):
         self.providers_page = ProvidersPage(self.context)
         self.settings_page = SettingsPage(self.context)
         self.settings_page.settings_saved.connect(self.reload_context)
+        self.help_page = HelpPage(self.context)
         self.skills_page = SkillsPage(self.context)
 
         self.page_map = {
@@ -169,11 +172,12 @@ class MainWindow(QMainWindow):
             "Providers": self.providers_page,
             "API Registry": self.dashboard_page,
             "Settings": self.settings_page,
+            "Help": self.help_page,
             "Logs": self.dashboard_page,
             "Agent Skills": self.skills_page,
             "Exports": self.dashboard_page,
         }
-        for page in [self.home_page, self.new_project_page, self.dashboard_page, self.brain_page, self.providers_page, self.settings_page, self.skills_page]:
+        for page in [self.home_page, self.new_project_page, self.dashboard_page, self.brain_page, self.providers_page, self.settings_page, self.help_page, self.skills_page]:
             self.stack.addWidget(page)
 
         self.nav_list.currentTextChanged.connect(self.switch_page)
@@ -241,6 +245,7 @@ class MainWindow(QMainWindow):
         self.brain_page.context = self.context
         self.providers_page.context = self.context
         self.settings_page.context = self.context
+        self.help_page.context = self.context
         self.skills_page.context = self.context
         self.skills_page.load_skills()
         self.settings_page.load_settings()
