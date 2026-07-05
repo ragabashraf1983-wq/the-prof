@@ -1,0 +1,20 @@
+[
+  {
+    "fact_id": "FACT-000001",
+    "statement": "Local-first systems reduce dependence on remote services for routine workflow continuity.",
+    "category": "software architecture",
+    "verification_status": "verified",
+    "stability": "stable",
+    "freshness": "fresh",
+    "reusable_without_recheck": true
+  },
+  {
+    "fact_id": "FACT-000002",
+    "statement": "Crossref provides DOI-linked metadata through its public Works API.",
+    "category": "research infrastructure",
+    "verification_status": "verified",
+    "stability": "slow-changing",
+    "freshness": "fresh",
+    "reusable_without_recheck": true
+  }
+]
